@@ -1,5 +1,3 @@
-import "./App.css";
-import React from "react";
 import SingleCard from "./components/SingleCard/SingleCard";
 import Grid from "@mui/material/Grid2";
 
