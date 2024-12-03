@@ -171,4 +171,5 @@ export function Navigation() {
     </AppBar>
   );
 }
+
 export default Navigation;
