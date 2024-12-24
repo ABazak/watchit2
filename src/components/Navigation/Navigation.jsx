@@ -8,10 +8,8 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import logo from "./logo.png";
@@ -27,15 +25,11 @@ const pages = [
     link: "films",
   },
   {
-    name: "Popular Shows",
-    link: "popular",
-  },
-  {
-    name: "Saved Films",
+    name: "SAVED FILMS",
     link: "savedFilms",
   },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
 
 export function Navigation() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -105,8 +99,8 @@ export function Navigation() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages.map(({ name }) => (
-                <MenuItem key={name} onClick={handleCloseNavMenu}>
+              {pages.map(({ name }, index) => (
+                <MenuItem key={index} onClick={handleCloseNavMenu}>
                   <Typography sx={{ textAlign: "center" }}>{name}</Typography>
                 </MenuItem>
               ))}
@@ -120,8 +114,9 @@ export function Navigation() {
               alignItems: "center",
             }}
           >
-            {pages.map(({ name, link }) => (
+            {pages.map(({ name, link }, index) => (
               <NavLink
+                key={index}
                 to={link}
                 style={({ isActive }) => {
                   return {
@@ -171,5 +166,4 @@ export function Navigation() {
     </AppBar>
   );
 }
-
 export default Navigation;
