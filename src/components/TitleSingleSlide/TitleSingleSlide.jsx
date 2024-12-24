@@ -1,41 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Box, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./TitleSingleSlide.css";
 
 const TitleSingleSlide = () => {
-  const films = [
-    {
-      id: 1,
-      name: "Under the Dome",
-      starring: ["Mike Vogel", "Rachelle Lefevre", "Alexander Koch"],
-      summary:
-        "Under the Dome is the story of a small town that is suddenly and inexplicably sealed off from the rest of the world by an enormous transparent dome.",
-      genres: ["Drama", "Science-Fiction", "Thriller"],
-      image: "https://images2.alphacoders.com/841/841727.jpg",
-    },
-    {
-      id: 2,
-      name: "Breaking Bad",
-      starring: ["Bryan Cranston", "Aaron Pau", "lAnna Gunn"],
-      summary:
-        "A high school chemistry teacher turned methamphetamine producer navigates the dangers of the drug trade.",
-      genres: ["Crime", "Drama", "Thriller"],
-      image: "https://www.fonstola.ru/images/201502/fonstola.ru_162426.jpg",
-    },
-    {
-      id: 3,
-      name: "Game of Thrones",
-      starring: ["Emilia Clarke", "RPeter Dinklage", "Kit Harington"],
-      summary:
-        "Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after being dormant for millennia.",
-      genres: ["Fantasy", "Drama", "Adventure"],
-      image:
-        "https://wallpapers.com/images/featured-full/game-of-thrones-92acb30ilmkjbmu9.jpg",
-    },
-  ];
+  const [films, setFilms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchFilms = async () => {
+      try {
+        // Запрос популярных фильмов
+        const response = await axios.get(
+          "https://watchit-api.onrender.com/shows?amount=10"
+        );
+        const films = response.data;
+
+        // Запрос актеров для каждого фильма
+        const filmsWithCast = await Promise.all(
+          films.map(async (film) => {
+            try {
+              const castResponse = await axios.get(
+                `https://watchit-api.onrender.com/shows/${film.id}/cast`
+              );
+              const cast = castResponse.data;
+
+              return {
+                ...film,
+                cast, // Добавляем информацию об актерах
+              };
+            } catch (castError) {
+              console.error(
+                `Error fetching cast for film ${film.id}:`,
+                castError
+              );
+              return { ...film, cast: [] };
+            }
+          })
+        );
+
+        setFilms(filmsWithCast);
+      } catch (error) {
+        console.error("Error fetching films:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilms();
+  }, []);
+
+  if (loading) {
+    return <Box className="loading">Loading popular shows...</Box>;
+  }
 
   return (
     <Box
@@ -52,7 +75,6 @@ const TitleSingleSlide = () => {
         style={{ height: "100%" }}
         slidesPerView={1}
         allowTouchMove={false}
-        preventClicks={false}
         autoplay={{
           delay: 5000,
           disableOnInteraction: false,
@@ -65,7 +87,9 @@ const TitleSingleSlide = () => {
               sx={{
                 position: "relative",
                 height: "100%",
-                backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%), url(${film.image})`,
+                backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%), url(${
+                  film.image?.original || film.image?.medium
+                })`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 display: "flex",
@@ -79,7 +103,7 @@ const TitleSingleSlide = () => {
                 <Typography
                   variant="h2"
                   gutterBottom
-                  sx={{ marginBottom: "50px" }}
+                  sx={{ marginBottom: "30px" }}
                 >
                   {film.name || "Untitled"}
                 </Typography>
@@ -87,33 +111,45 @@ const TitleSingleSlide = () => {
                   variant="body1"
                   component="p"
                   gutterBottom
-                  sx={{ marginBottom: "30px", fontWeight: 300 }}
+                  sx={{ marginBottom: "20px", fontWeight: 300 }}
+                  dangerouslySetInnerHTML={{
+                    __html: film.summary || "No description available.",
+                  }}
+                ></Typography>
+                <Typography
+                  variant="subtitle1"
+                  component="p"
+                  gutterBottom
+                  sx={{ marginBottom: "20px" }}
                 >
-                  {film.summary}
-                </Typography>
-                <Typography variant="subtitle1" component="p" gutterBottom>
-                  <span style={{ color: "red", fontWeight: 300 }}>
-                    Starring:
-                  </span>{" "}
-                  {film.starring?.join(", ") || "No starring"}
-                </Typography>
-                <Typography variant="subtitle1" component="p" gutterBottom>
                   <span style={{ color: "red" }}>Genres:</span>{" "}
-                  {film.genres[0] || "No genres"}
+                  {film.genres?.join(", ") || "No genres"}
                 </Typography>
                 <Typography
                   variant="subtitle1"
                   component="p"
                   gutterBottom
-                  sx={{ marginBottom: "30px" }}
+                  sx={{ marginBottom: "20px" }}
+                >
+                  <span style={{ color: "red" }}>Starring:</span>{" "}
+                  {film.cast
+                    ?.slice(0, 3)
+                    .map((actor) => actor.person.name)
+                    .join(", ") || "No starring"}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  component="p"
+                  gutterBottom
+                  sx={{ marginBottom: "20px" }}
                 >
                   <span style={{ color: "red" }}>Tag:</span>{" "}
-                  {film.genres?.join(", ") || "No genres"}
+                  {film.cast?.[0]?.character.name || "No tag"}
                 </Typography>
                 <Button
                   variant="contained"
                   color="error"
-                  href="https://watchit-api.onrender.com/shows/popular"
+                  onClick={() => navigate(`/films/${film.id}`)}
                   sx={{ borderRadius: 0 }}
                 >
                   Show more
