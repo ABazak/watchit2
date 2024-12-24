@@ -7,29 +7,32 @@ import { Box } from "@mui/material";
 import { FilmsProvider } from "../context/FilmContext";
 import TitleSingleSlide from "../components/TitleSingleSlide/TitleSingleSlide";
 import { useLocation } from "react-router-dom";
+import { FavoritesProvider } from "../context/FavoriteIconContext";
 
 const Main = () => {
   const location = useLocation();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        backgroundColor: "#141414",
-      }}
-    >
-      <Navigation />
+    <FavoritesProvider>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          backgroundColor: "#141414",
+        }}
+      >
+        <Navigation />
 
-      <FilmsProvider>
-        {location.pathname === "/" && <TitleSingleSlide />}
-        <Grid container>
-          <Outlet />
-        </Grid>
-      </FilmsProvider>
-      <Footer />
-    </Box>
+        <FilmsProvider>
+          {location.pathname === "/" && <TitleSingleSlide />}
+          <Grid container>
+            <Outlet />
+          </Grid>
+        </FilmsProvider>
+        <Footer />
+      </Box>
+    </FavoritesProvider>
   );
 };
 
