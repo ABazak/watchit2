@@ -1,3 +1,6 @@
+import React from "react";
+import Navigation from "./components/Navigation/Navigation";
+import Footer from "./components/Footer/Footer";
 import SingleCard from "./components/SingleCard/SingleCard";
 import Grid from "@mui/material/Grid2";
 
@@ -32,13 +35,16 @@ const mockData = [
   },
 ];
 
+
 function App() {
+  
   const handleCardClick = (id) => {
     console.log(`Movie ID: ${id}`);
   };
 
   return (
     <div className="App">
+     <Navigation />
       <Grid container spacing={2} sx={{ padding: "15px" }}>
         {mockData.map(({ id, name, time, image }, index) => {
           return (
@@ -54,6 +60,7 @@ function App() {
           );
         })}
       </Grid>
+     <Footer />
     </div>
   );
 }
