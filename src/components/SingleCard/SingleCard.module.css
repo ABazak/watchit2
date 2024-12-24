@@ -13,10 +13,19 @@
 }
 
 .buttonStyle {
-  border: 1px solid #e50914;
-  background: #e50914;
+  background: #e50914 !important;
   width: 110px;
   height: 30px;
   color: #fff;
-  text-transform: none;
+  text-transform: none !important;
+}
+
+.favIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
