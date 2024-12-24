@@ -8,6 +8,8 @@ import ActorInfo from "./pages/ActorInfo";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Auth from "./layout/Auth";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import SavedFilms from "./pages/SavedFilms";
 
 const PrivateRoute = ({ children }) => {
   const accessToken = localStorage.getItem("accessToken");
@@ -21,7 +23,12 @@ const PrivateRoute = ({ children }) => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main />,
+    element: (
+      <>
+        <ScrollToTop />
+        <Main />
+      </>
+    ),
     errorElement: <NotFound />,
     children: [
       {
@@ -35,17 +42,34 @@ const router = createBrowserRouter([
       {
         path: "/films/:filmId",
         element: (
-          <PrivateRoute>
-            <SingleFilm />
-          </PrivateRoute>
+          <>
+            <ScrollToTop />
+            <PrivateRoute>
+              <SingleFilm />
+            </PrivateRoute>
+          </>
         ),
       },
       {
         path: "/actor/:actorId",
         element: (
-          <PrivateRoute>
-            <ActorInfo />
-          </PrivateRoute>
+          <>
+            <ScrollToTop />
+            <PrivateRoute>
+              <ActorInfo />
+            </PrivateRoute>
+          </>
+        ),
+      },
+      {
+        path: "/savedFilms",
+        element: (
+          <>
+            <ScrollToTop />
+            <PrivateRoute>
+              <SavedFilms />
+            </PrivateRoute>
+          </>
         ),
       },
     ],
