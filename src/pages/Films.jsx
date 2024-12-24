@@ -1,11 +1,42 @@
-import { Typography } from "@mui/material";
-import React from "react";
-import Footer from "../components/Footer/Footer";
+import React, { useContext } from "react";
+import SingleCard from "../components/SingleCard/SingleCard";
+import Grid from "@mui/material/Grid2";
+import { DEFAULT_IMAGE } from "../constants/constants";
+import { useNavigate } from "react-router-dom";
+import { FilmsContext } from "../context/FilmContext";
+import "./ActorInfo.css";
 
-const Films = () => {
-  return <Typography variant="h1">Это страничка Films</Typography>;
-};
+function Films() {
+  const { data } = useContext(FilmsContext); 
 
-<Footer />;
+  const navigate = useNavigate();
+  const handleCardClick = (id) => {
+    navigate(`/films/${id}`);
+  };
+
+  
+  if (!data || data.length === 0) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  return (
+    <>
+      <Grid container spacing={2} sx={{ padding: "15px" }}>
+        {data.map(({ id, name, runtime, premiered, image }, index) => (
+          <Grid size={3} key={index}>
+            <SingleCard
+              id={id}
+              name={name}
+              time={premiered}
+              runtime={runtime}
+              image={image?.original ?? DEFAULT_IMAGE}
+              makeClick={handleCardClick}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </>
+  );
+}
 
 export default Films;
