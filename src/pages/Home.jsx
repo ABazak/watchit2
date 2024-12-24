@@ -6,18 +6,34 @@ import { Box, TextField } from "@mui/material";
 import { DEFAULT_IMAGE } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
 import { FilmsContext } from "../context/FilmContext";
+import { useFavorites } from "../context/FavoriteIconContext";
 import SliderHome from "../components/SliderHome/SliderHome";
 
-function App() {
+function Home() {
   const { search, setSearch, data } = useContext(FilmsContext);
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites(); 
+  const navigate = useNavigate();
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
   };
 
-  const navigate = useNavigate();
   const handleCardClick = (id) => {
     navigate(`/films/${id}`);
+  };
+
+  const handleHeartClick = (film) => {
+    const isLoggedIn = localStorage.getItem("accessToken"); // Проверяем авторизацию
+    if (!isLoggedIn) {
+      navigate("/auth/login"); 
+      return;
+    }
+
+    if (isFavorite(film.id)) {
+      removeFavorite(film.id);
+    } else {
+      addFavorite(film); // Добавляем в избранное
+    }
   };
 
   const searchRef = useRef(null);
@@ -74,7 +90,6 @@ function App() {
                 backgroundColor: "#191919",
               },
             },
-
             marginBottom: "50px",
           }}
         />
@@ -84,8 +99,8 @@ function App() {
       <SliderHome genre="Crime" />
 
       <Grid container spacing={2} sx={{ padding: "15px" }}>
-        {data.map(({ id, name, runtime, premiered, image }, index) => (
-          <Grid size={3} key={index}>
+        {data.map(({ id, name, runtime, premiered, image }) => (
+          <Grid size={3} key={id}>
             <SingleCard
               id={id}
               name={name}
@@ -93,6 +108,10 @@ function App() {
               runtime={runtime}
               image={image?.original ?? DEFAULT_IMAGE}
               makeClick={handleCardClick}
+              isFavorite={isFavorite(id)} // Состояние избранного
+              onHeartClick={() =>
+                handleHeartClick({ id, name, runtime, premiered, image })
+              } // Обработка клика на сердечко
             />
           </Grid>
         ))}
@@ -101,4 +120,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
