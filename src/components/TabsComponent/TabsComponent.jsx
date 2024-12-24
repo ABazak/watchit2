@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Tabs, Tab, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid2"; // Используем Grid2
 import StarIcon from "@mui/icons-material/Star";
 
 function a11yProps(index) {
@@ -21,11 +21,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -37,11 +33,28 @@ function TabsComponent() {
     setValue(newValue);
   };
 
+  const episodes = [
+    {
+      title: "Pilot (Season 1, Episode 1)",
+      airdate: "2024-06-24",
+      rating: 3.5,
+    },
+    {
+      title: "The Fire (Season 1, Episode 2)",
+      airdate: "2024-07-24",
+      rating: 3.5,
+    },
+    {
+      title: "Manhunt (Season 1, Episode 3)",
+      airdate: "2024-08-24",
+      rating: 3.5,
+    },
+  ];
+
   return (
     <Box
       sx={{
         width: 1,
-
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
@@ -55,17 +68,8 @@ function TabsComponent() {
           background: "linear-gradient(to right, #141414, #080808, #141414)",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Box
-            sx={{
-              width: "500px",
-            }}
-          >
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ width: "500px" }}>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -93,11 +97,7 @@ function TabsComponent() {
               }}
             >
               <Tab label="Description" {...a11yProps(0)} />
-              <Tab
-                label="Series"
-                {...a11yProps(1)}
-                //
-              />
+              <Tab label="Series" {...a11yProps(1)} />
             </Tabs>
           </Box>
         </Box>
@@ -116,172 +116,122 @@ function TabsComponent() {
 
       <CustomTabPanel value={value} index={1}>
         <Box sx={{ width: "100%", color: "#fff" }}>
-          {/* Заголовок  */}
+          {/* Заголовки */}
           <Grid
             container
-            spacing={3}
+            spacing={2}
             sx={{
-              padding: "20px 20px",
-              justifyContent: "space-between",
               backgroundColor: "#282B2F",
-              borderBottom: "2px solid #474D54",
+              padding: "35px 20px",
+              margin: "20px 0px",
+              position: "relative", // Включаем позиционирование для каждой строки
+              alignItems: "center",
+              flexWrap: "wrap", // Позволяем элементам переноситься
             }}
           >
-            <Grid>
-              <Typography component="span" sx={{ fontWeight: "bold" }}>
-                Episode
-              </Typography>
+            <Grid
+              xs={4}
+              sx={{
+                position: "absolute",
+                // left: 0,
+                textAlign: "left",
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold" }}>Episode</Typography>
             </Grid>
-            <Grid sx={{ textAlign: "center" }}>
-              <Typography
-                component="span"
-                sx={{ fontWeight: "bold", marginLeft: "9rem" }}
-              >
-                Airdate
-              </Typography>
+            <Grid
+              xs={4}
+              sx={{
+                position: "absolute",
+                left: "50%",
+                // transform: "translateX(-50%)", // Центрируем колонку
+                textAlign: "center",
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold" }}>Airdate</Typography>
             </Grid>
-            <Grid sx={{ textAlign: "right" }}>
-              <Typography
-                component="span"
-                sx={{ fontWeight: "bold", marginRight: "25rem" }}
-              >
-                Raiting
-              </Typography>
+            <Grid
+              xs={4}
+              sx={{
+                position: "absolute",
+                right: 0,
+                textAlign: "right",
+                paddingRight: "220px",
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold" }}>Rating</Typography>
             </Grid>
           </Grid>
 
-          {/* Информация о серии */}
-          <Grid
-            container
-            spacing={3}
-            sx={{
-              padding: "20px 20px",
-              backgroundColor: "#191919",
-              margin: "10px 0",
-              justifyContent: "space-between",
-            }}
-          >
-            <Grid>
-              <Typography>Pilot (Season 1, Episode 1)</Typography>
-            </Grid>
-            <Grid sx={{ textAlign: "center" }}>
-              <Typography>2024-06-24</Typography>
-            </Grid>
+          {/* Список серий */}
+          {episodes.map((episode, index) => (
             <Grid
+              container
+              spacing={2}
+              key={index}
               sx={{
-                textAlign: "right",
+                backgroundColor: "#191919",
+                padding: "35px 20px",
+                margin: "20px 0px",
                 display: "flex",
+                flexWrap: "wrap",
+                position: "relative", // Позиционирование для строки
                 alignItems: "center",
               }}
             >
-              {/* Рейтинг со звездами */}
-              {[...Array(5)].map((_, index) => (
-                <StarIcon
-                  key={index}
-                  sx={{
-                    color: index < 4 ? "#e50914" : "gray",
-                    fontSize: "18px",
-                  }}
-                />
-              ))}
-              <Typography
-                component="span"
-                sx={{ marginLeft: 1, marginRight: "20rem" }}
+              {/* Левая колонка */}
+              <Grid
+                xs={4}
+                sx={{
+                  position: "absolute",
+                  // left: 0,
+                  textAlign: "left",
+                }}
               >
-                3.5
-              </Typography>
-            </Grid>
-          </Grid>
-          {/* Информация о серии */}
-          <Grid
-            container
-            spacing={3}
-            sx={{
-              padding: "20px 20px",
-              backgroundColor: "#191919",
-              margin: "10px 0",
-              justifyContent: "space-between",
-            }}
-          >
-            <Grid>
-              <Typography component="span">
-                The Fire (Season 1, Episode 2)
-              </Typography>
-            </Grid>
-            <Grid sx={{ textAlign: "center" }}>
-              <Typography component="span">2024-07-24</Typography>
-            </Grid>
-            <Grid
-              sx={{
-                textAlign: "right",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
-              }}
-            >
-              {/* Рейтинг со звездами */}
-              {[...Array(5)].map((_, index) => (
-                <StarIcon
-                  key={index}
-                  sx={{
-                    color: index < 4 ? "#e50914" : "gray",
-                    fontSize: "18px",
-                  }}
-                />
-              ))}
-              <Typography
-                component="span"
-                sx={{ marginLeft: 1, marginRight: "20rem" }}
+                <Typography>{episode.title}</Typography>
+              </Grid>
+
+              {/* Центральная колонка */}
+              <Grid
+                xs={4}
+                sx={{
+                  position: "absolute",
+                  left: "50%",
+                  // transform: "translateX(-50%)", // Центрируем колонку
+                  textAlign: "center",
+                }}
               >
-                3.5
-              </Typography>
-            </Grid>
-          </Grid>
-          {/* Информация о серии */}
-          <Grid
-            container
-            spacing={3}
-            sx={{
-              padding: "20px 20px",
-              backgroundColor: "#191919",
-              margin: "10px 0",
-              justifyContent: "space-between",
-            }}
-          >
-            <Grid>
-              <Typography component="span">
-                Manhunt (Season 1, Episode 3)
-              </Typography>
-            </Grid>
-            <Grid sx={{ textAlign: "center" }}>
-              <Typography component="span">2024-08-24</Typography>
-            </Grid>
-            <Grid
-              sx={{
-                textAlign: "right",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
-              }}
-            >
-              {/* Рейтинг со звездами */}
-              {[...Array(5)].map((_, index) => (
-                <StarIcon
-                  key={index}
-                  sx={{
-                    color: index < 4 ? "#e50914" : "gray",
-                    fontSize: "18px",
-                  }}
-                />
-              ))}
-              <Typography
-                component="span"
-                sx={{ marginLeft: 1, marginRight: "20rem" }}
+                <Typography>{episode.airdate}</Typography>
+              </Grid>
+
+              {/* Правая колонка */}
+              <Grid
+                xs={4}
+                sx={{
+                  position: "absolute",
+                  right: 0,
+                  paddingRight: "150px",
+                  textAlign: "right",
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
-                3.5
-              </Typography>
+                {[...Array(5)].map((_, starIndex) => (
+                  <StarIcon
+                    key={starIndex}
+                    sx={{
+                      color:
+                        starIndex < Math.round(episode.rating)
+                          ? "#e50914"
+                          : "gray",
+                      fontSize: "18px",
+                    }}
+                  />
+                ))}
+                <Typography sx={{ marginLeft: 1 }}>{episode.rating}</Typography>
+              </Grid>
             </Grid>
-          </Grid>
+          ))}
         </Box>
       </CustomTabPanel>
     </Box>
