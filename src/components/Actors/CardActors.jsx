@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
@@ -6,32 +6,14 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import { useNavigate } from "react-router-dom";
+import { DEFAULT_IMAGE } from "../../constants/constants";
 
-function CardActor() {
+function CardActor({ actors }) {
   const navigate = useNavigate();
 
   const handleCardClick = (actorId) => {
-    navigate(`/actor/${actorId}`);
+    navigate(`/actor/${actorId}`); 
   };
-
-  const actors = [
-    {
-      id: "charlie-hunnam",
-      name: "Charlie Hunnam",
-      description:
-        "Famous for his roles in 'Sons of Anarchy' and 'King Arthur.",
-      image:
-        "https://jamadvice.com.ua/wp-content/uploads/2018/07/jamadvice_com_ua_the-most-beautiful-actors-of-hollywood-charlie-hunnam-1.jpg",
-    },
-    {
-      id: "henry-cavill",
-      name: "Henry Cavill",
-      description:
-        "Known for his performances in 'Superman' and 'The Witcher.'",
-      image:
-        "https://jamadvice.com.ua/wp-content/uploads/2018/07/jamadvice_com_ua_the-most-beautiful-actors-of-hollywood-henry-cavill-1.jpg",
-    },
-  ];
 
   return (
     <>
@@ -55,13 +37,13 @@ function CardActor() {
           marginBottom: 15,
         }}
       >
-        {actors.map((actor) => (
+        {actors.map(({ person, character }) => (
           <Card
-            key={actors.id}
-            sx={{ maxWidth: 450, backgroundColor: "#222222", color: "#fff" }}
+            key={person.id}
+            sx={{ width: 340, backgroundColor: "#222222", color: "#fff" }}
           >
             <CardActionArea
-              onClick={() => handleCardClick(actor.id)}
+              onClick={() => handleCardClick(person.id)}
               sx={{
                 display: "flex",
                 flexDirection: "row",
@@ -69,9 +51,13 @@ function CardActor() {
             >
               <CardMedia
                 component="img"
-                sx={{ width: 210, height: 150 }}
-                image={actor.image}
-                alt={actor.name}
+                sx={{ width: 150, height: 150 }}
+                image={
+                  person.image?.medium ||
+                  character.image?.medium ||
+                  DEFAULT_IMAGE
+                }
+                alt={person.name}
               />
               <CardContent
                 sx={{
@@ -83,9 +69,11 @@ function CardActor() {
                 }}
               >
                 <Typography gutterBottom variant="h5" component="div">
-                  {actor.name}
+                  {person.name}
                 </Typography>
-                <Typography variant="body2">{actor.description}</Typography>
+                <Typography variant="body2">
+                  {character.name} ({person.gender})
+                </Typography>
               </CardContent>
             </CardActionArea>
           </Card>
