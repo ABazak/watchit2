@@ -11,8 +11,27 @@ import Stars from "../SingleItemHeader/Stars";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Card from "@mui/material/Card";
+import styles from "./SingleItemHeader.module.css";
+import { useFavorites } from "../../context/FavoriteIconContext"; 
 
-const SingleItemHeader = ({ name, image = DEFAULT_IMAGE, genres = [] }) => {
+const SingleItemHeader = ({
+  id,
+  name,
+  time,
+  image = DEFAULT_IMAGE,
+  genres = [],
+}) => {
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+  const isSaved = isFavorite(id); 
+
+  const handleFavoriteClick = () => {
+    if (isSaved) {
+      removeFavorite(id);
+    } else {
+      addFavorite({ id, name, image, time }); 
+    }
+  };
+
   return (
     <Grid
       container
@@ -58,40 +77,17 @@ const SingleItemHeader = ({ name, image = DEFAULT_IMAGE, genres = [] }) => {
             marginTop: "5px",
           }}
         >
-          <Box
-            sx={{
-              width: 20,
-              height: 20,
-              backgroundColor: "gray",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <Box className={styles.iconG}>
             <GoogleIcon sx={{ color: "#fff", width: 12, height: 12 }} />
           </Box>
           <Typography component="span" sx={{ color: "#fff", fontSize: "14px" }}>
             1hr : 36mins
           </Typography>
-          <Box
-            sx={{
-              width: 5,
-              height: 5,
-              backgroundColor: "gray",
-              borderRadius: "50%",
-            }}
-          ></Box>
+          <Box className={styles.separatorDot}></Box>
           <Typography component="span" sx={{ color: "#fff", fontSize: "14px" }}>
             Nov 2024
           </Typography>
-          <Box
-            sx={{
-              width: 5,
-              height: 5,
-              backgroundColor: "gray",
-              borderRadius: "50%",
-            }}
-          ></Box>
+          <Box className={styles.separatorDot}></Box>
           <Box sx={{ display: "flex", alignItems: "center", color: "#fff" }}>
             <VisibilityIcon sx={{ fontSize: "16px" }} />
             <Typography
@@ -103,7 +99,7 @@ const SingleItemHeader = ({ name, image = DEFAULT_IMAGE, genres = [] }) => {
           </Box>
         </Box>
 
-        {/* Icons*/}
+        {/* Icons */}
         <Box
           sx={{
             display: "flex",
@@ -112,29 +108,9 @@ const SingleItemHeader = ({ name, image = DEFAULT_IMAGE, genres = [] }) => {
             marginTop: "5px",
           }}
         >
-          {/* Icon Share*/}
-          <Box
-            sx={{
-              width: 40,
-              height: 40,
-              backgroundColor: "grey",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "50%",
-            }}
-          >
-            <Box
-              sx={{
-                width: 30,
-                height: 30,
-                backgroundColor: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "50%",
-              }}
-            >
+          {/* Icon Share */}
+          <Box className={styles.iconGreyColor}>
+            <Box className={styles.iconWhiteColor}>
               <ShareIcon
                 sx={{
                   color: "#e50914",
@@ -145,62 +121,32 @@ const SingleItemHeader = ({ name, image = DEFAULT_IMAGE, genres = [] }) => {
             </Box>
           </Box>
 
-          {/* Icon FavoriteIcon*/}
+          {/* Icon FavoriteIcon */}
           <Box
-            sx={{
-              width: 40,
-              height: 40,
-              backgroundColor: "grey",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "50%",
-            }}
+            className={styles.favIconGreyRed}
+            sx={{ backgroundColor: isSaved ? "red" : "grey" }}
+            onClick={handleFavoriteClick}
+            title={isSaved ? "Unfollow" : "Follow"}
           >
             <Box
+              className={styles.favIconWhiteRed}
               sx={{
-                width: 30,
-                height: 30,
-                backgroundColor: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "50%",
+                backgroundColor: isSaved ? "red" : "white",
               }}
             >
               <FavoriteIcon
                 sx={{
-                  color: "#e50914",
-                  width: 16,
-                  height: 16,
+                  color: isSaved ? "white" : "red",
+                  width: isSaved ? 27 : 22,
+                  height: isSaved ? 27 : 22,
                 }}
               />
             </Box>
           </Box>
 
-          {/* Icon AddIcon*/}
-          <Box
-            sx={{
-              width: 40,
-              height: 40,
-              backgroundColor: "grey",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "50%",
-            }}
-          >
-            <Box
-              sx={{
-                width: 30,
-                height: 30,
-                backgroundColor: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "50%",
-              }}
-            >
+          {/* Icon AddIcon */}
+          <Box className={styles.iconGreyColor}>
+            <Box className={styles.iconWhiteColor}>
               <AddIcon
                 sx={{
                   color: "#e50914",
@@ -236,18 +182,7 @@ const SingleItemHeader = ({ name, image = DEFAULT_IMAGE, genres = [] }) => {
         }}
       >
         <CardMedia sx={{ height: 1 }} component="img" image={image} />
-        <CardContent
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-
-            background:
-              "linear-gradient(90deg, rgba(0, 0, 0, 0.80) 0%, rgba(20, 20, 20, 0.40) 50%, rgba(83, 100, 141, 0.00) 100%)",
-          }}
-        ></CardContent>
+        <CardContent className={styles.image}></CardContent>
       </Card>
     </Grid>
   );
