@@ -5,7 +5,7 @@ import axios from "axios";
 import Header from "../components/SingleItemHeader/SingleItemHeader";
 import Tabs from "../components/TabsComponent/TabsComponent";
 import DividerLine from "../components/Actors/Divider";
-import CardActor from "../components/Actors/CardActor";
+import CardActor from "../components/Actors/CardActors";
 import "./ActorInfo.css";
 
 const SingleFilm = () => {
