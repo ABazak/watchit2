@@ -1,0 +1,69 @@
+.iconG {
+  width: 20px;
+  height: 20px;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.separatorDot {
+  width: 5px;
+  height: 5px;
+  background-color: gray;
+  border-radius: 50%;
+}
+
+.iconGreyColor {
+  width: 40px;
+  height: 40px;
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.iconWhiteColor {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+/** Активная иконка */
+.favIconGreyRed {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.favIconWhiteRed {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+/* конец активной иконки */
+
+/* Картинка */
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(20, 20, 20, 0.4) 50%,
+    rgba(83, 100, 141, 0) 100%
+  );
+}

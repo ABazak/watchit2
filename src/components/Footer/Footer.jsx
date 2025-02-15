@@ -6,7 +6,9 @@ import XIcon from "@mui/icons-material/X";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
+
 const Footer = () => {
+
   const iconApp = "/images/iconstor.svg";
   const iconGoogle = "/images/icongoogle.png";
 
