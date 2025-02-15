@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Link, IconButton } from "@mui/material";
-import Grid from "@mui/material/Grid2"; 
+import Grid from "@mui/material/Grid2"; // Импортируем Grid2
 import FacebookIcon from "@mui/icons-material/Facebook";
 import XIcon from "@mui/icons-material/X";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -22,7 +22,7 @@ const Footer = () => {
       <Grid
         sx={{
           display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, 
+          gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, // 1 колонка на мобилках, 3 на ПК
           gap: 2,
           textAlign: { xs: "center", md: "left" },
           color: "#FFF4E6",
