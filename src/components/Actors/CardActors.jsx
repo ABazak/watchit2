@@ -12,7 +12,7 @@ function CardActor({ actors }) {
   const navigate = useNavigate();
 
   const handleCardClick = (actorId) => {
-    navigate(`/actor/${actorId}`); 
+    navigate(`/actor/${actorId}`);
   };
 
   return (
@@ -29,10 +29,14 @@ function CardActor({ actors }) {
       </Box>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: 3,
-          flexWrap: "wrap",
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr", 
+            sm: "repeat(2, 1fr)", 
+            md: "repeat(3, 1fr)", 
+            lg: "repeat(4, 1fr)",
+          },
+          gap: 2,
           marginTop: 2,
           marginBottom: 15,
         }}
@@ -40,7 +44,13 @@ function CardActor({ actors }) {
         {actors.map(({ person, character }) => (
           <Card
             key={person.id}
-            sx={{ width: 340, backgroundColor: "#222222", color: "#fff" }}
+            sx={{
+              backgroundColor: "#222222",
+              color: "#fff",
+              width: "100%",
+              maxWidth: 400,
+              alignSelf: "center",
+            }}
           >
             <CardActionArea
               onClick={() => handleCardClick(person.id)}
@@ -51,7 +61,10 @@ function CardActor({ actors }) {
             >
               <CardMedia
                 component="img"
-                sx={{ width: 150, height: 150 }}
+                sx={{
+                  width: 150,
+                  height: 150,
+                }}
                 image={
                   person.image?.medium ||
                   character.image?.medium ||
