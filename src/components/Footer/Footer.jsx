@@ -6,7 +6,10 @@ import XIcon from "@mui/icons-material/X";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
+
 const Footer = () => {
+ 
+  
   return (
     <Box
       sx={{
@@ -107,7 +110,8 @@ const Footer = () => {
               style={{ width: "150px", marginRight: "20px", cursor: "pointer" }}
             />
             <img
-              src="https://www.churchoftherock.ca/wp-content/uploads/2024/02/download-on-the-app-store-apple-logo-png-transparent.png"
+              src={iconApp}
+              // src="https://www.churchoftherock.ca/wp-content/uploads/2024/02/download-on-the-app-store-apple-logo-png-transparent.png"
               alt="App Store"
               style={{ width: "150px", cursor: "pointer" }}
             />
