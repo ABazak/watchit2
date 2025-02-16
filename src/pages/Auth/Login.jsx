@@ -65,8 +65,6 @@ const Login = () => {
           gap: 4,
           padding: 5,
           width: "300px",
-          // margin: "auto",
-          // marginTop: "100px",
           border: "1px solid #ccc",
           borderRadius: "8px",
         }}
