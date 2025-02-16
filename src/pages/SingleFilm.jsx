@@ -11,9 +11,8 @@ import "./ActorInfo.css";
 const SingleFilm = () => {
   const { filmId } = useParams();
   const [filmData, setFilmData] = useState(null);
-  const [actors, setActors] = useState([]); 
+  const [actors, setActors] = useState([]);
 
-  // Запрос на данные фильма
   useEffect(() => {
     const fetchFilmData = async () => {
       const response = await axios.get(
@@ -26,7 +25,7 @@ const SingleFilm = () => {
       const response = await axios.get(
         `https://watchit-api.onrender.com/shows/${filmId}/cast`
       );
-         const uniqueActors = response.data.filter(
+      const uniqueActors = response.data.filter(
         (actor, index, self) =>
           index === self.findIndex((a) => a.person.id === actor.person.id)
       );
@@ -40,7 +39,16 @@ const SingleFilm = () => {
   if (!filmData) return <div className="loading">Loading...</div>;
 
   return (
-    <Grid container sx={{ marginLeft: "50px", width: "1" }}>
+    <Grid
+      container
+      sx={{
+        width: "100%",
+        maxWidth: { xs: "1200px", md: "100%" }, 
+        padding: "0 16px",
+        paddingTop: "10px",
+        margin: { xs: "0 auto", md: "0" }, 
+      }}
+    >
       <Header
         id={filmData.id}
         name={filmData.name}
