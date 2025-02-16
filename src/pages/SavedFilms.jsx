@@ -7,14 +7,20 @@ import { useNavigate } from "react-router-dom";
 
 const SavedFilms = () => {
   const { favorites } = useFavorites();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleCardClick = (id) => {
-    navigate(`/films/${id}`); 
+    navigate(`/films/${id}`);
   };
 
   return (
-    <Box sx={{ padding: "20px" }}>
+    <Box
+      sx={{
+        padding: "20px",
+        maxWidth: "100vw",
+        overflowX: "hidden", 
+      }}
+    >
       <Typography
         variant="h4"
         sx={{ marginBottom: "20px", color: "white", fontWeight: 600 }}
