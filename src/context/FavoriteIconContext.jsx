@@ -1,8 +1,10 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [favorites, setFavorites] = useState(() => {
     // Загружаем избранные фильмы из localStorage при первом рендере
     const savedFavorites = localStorage.getItem("favorites");
@@ -15,6 +17,12 @@ export const FavoritesProvider = ({ children }) => {
   }, [favorites]);
 
   const addFavorite = (film) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      navigate("/auth/login"); // Перенаправление на страницу логина
+      return;
+    }
+
     if (!favorites.find((item) => item.id === film.id)) {
       setFavorites([...favorites, film]);
     }
