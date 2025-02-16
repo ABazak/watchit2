@@ -94,16 +94,17 @@ const TitleSingleSlide = () => {
                 backgroundPosition: "center",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "flex-start",
-                padding: "0 50px",
+                justifyContent: { xs: "center", md: "flex-start" },
+                padding: { xs: "10px", md: "0 50px" },
+                textAlign: { xs: "center", md: "left" },
                 backgroundBlendMode: "darken",
               }}
             >
-              <Box sx={{ maxWidth: "40%", color: "#fff" }}>
+              <Box sx={{ maxWidth: { xs: "100%", md: "40%" }, color: "#fff" }}>
                 <Typography
-                  variant="h2"
+                  variant={window.innerWidth <= 600 ? "h4" : "h2"}
                   gutterBottom
-                  sx={{ marginBottom: "30px" }}
+                  sx={{ marginBottom: "20px" }}
                 >
                   {film.name || "Untitled"}
                 </Typography>
@@ -113,24 +114,17 @@ const TitleSingleSlide = () => {
                   gutterBottom
                   sx={{ marginBottom: "20px", fontWeight: 300 }}
                   dangerouslySetInnerHTML={{
-                    __html: film.summary || "No description available.",
+                    __html:
+                      film.summary && window.innerWidth <= 600
+                        ? film.summary.slice(0, 100) + "..."
+                        : film.summary || "No description available.",
                   }}
                 ></Typography>
-                <Typography
-                  variant="subtitle1"
-                  component="p"
-                  gutterBottom
-                  sx={{ marginBottom: "20px" }}
-                >
+                <Typography variant="subtitle1" component="p" gutterBottom>
                   <span style={{ color: "red" }}>Genres:</span>{" "}
                   {film.genres?.join(", ") || "No genres"}
                 </Typography>
-                <Typography
-                  variant="subtitle1"
-                  component="p"
-                  gutterBottom
-                  sx={{ marginBottom: "20px" }}
-                >
+                <Typography variant="subtitle1" component="p" gutterBottom>
                   <span style={{ color: "red" }}>Starring:</span>{" "}
                   {film.cast
                     ?.slice(0, 3)
