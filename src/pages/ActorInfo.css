@@ -15,9 +15,7 @@
   align-items: center;
   min-width: 250px; 
   max-width: 250px; 
-  /* height: 350px; Высота карточки */
-  /* margin: 0 auto; */
-  /* justify-content: center; */
+
 }
 
 .moviesCard {
@@ -28,11 +26,14 @@
 }
 
 .cardActor {
-  width: 400px;
-  height: 500px;
-  margin-right: 50px;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
   border: 0.1px solid black;
 }
+
 
 .loading {
   color: #ffffff;
@@ -54,5 +55,34 @@
   }
   50% {
     opacity: 1;
+  }
+}
+
+/* Мобильные устройства (до 600px)  */
+@media (max-width: 600px) {
+  .cardActor {
+    width: 50%; 
+    max-width: 250px;
+    max-height: 300px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+/* Планшеты (600px - 1024px) */
+@media (min-width: 600px) and (max-width: 1024px) {
+  .cardActor {
+    width: 70%; 
+    max-width: 250px;
+    max-height: 350px;
+  }
+}
+
+/* ПК (от 1024px и больше) */
+@media (min-width: 1024px) {
+  .cardActor {
+    width: 300px; 
+    max-width: 400px;
+    max-height: 500px;
   }
 }
