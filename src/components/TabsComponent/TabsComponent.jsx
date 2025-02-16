@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Tabs, Tab, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid2"; // Используем Grid2
+import Grid from "@mui/material/Grid2"; 
 import StarIcon from "@mui/icons-material/Star";
 
 function a11yProps(index) {
@@ -122,45 +122,24 @@ function TabsComponent() {
             spacing={2}
             sx={{
               backgroundColor: "#282B2F",
-              padding: "35px 20px",
-              margin: "20px 0px",
-              position: "relative", // Включаем позиционирование для каждой строки
-              alignItems: "center",
-              flexWrap: "wrap", // Позволяем элементам переноситься
+              padding: "15px",
+              margin: "20px 0",
+              display: "grid",
+              gridTemplateColumns: "30% 35% 35%", 
+              textAlign: "left", 
+              fontWeight: "bold",
+              fontSize: "16px",
+              "@media (max-width: 800px)": {
+                gridTemplateColumns: "repeat(3, 1fr)", 
+              },
+              "@media (max-width: 600px)": {
+                gridTemplateColumns: "1fr", 
+              },
             }}
           >
-            <Grid
-              xs={4}
-              sx={{
-                position: "absolute",
-                // left: 0,
-                textAlign: "left",
-              }}
-            >
-              <Typography sx={{ fontWeight: "bold" }}>Episode</Typography>
-            </Grid>
-            <Grid
-              xs={4}
-              sx={{
-                position: "absolute",
-                left: "50%",
-                // transform: "translateX(-50%)", // Центрируем колонку
-                textAlign: "center",
-              }}
-            >
-              <Typography sx={{ fontWeight: "bold" }}>Airdate</Typography>
-            </Grid>
-            <Grid
-              xs={4}
-              sx={{
-                position: "absolute",
-                right: 0,
-                textAlign: "right",
-                paddingRight: "220px",
-              }}
-            >
-              <Typography sx={{ fontWeight: "bold" }}>Rating</Typography>
-            </Grid>
+            <Typography>Episode</Typography>
+            <Typography>Airdate</Typography>
+            <Typography>Rating</Typography>
           </Grid>
 
           {/* Список серий */}
@@ -171,51 +150,23 @@ function TabsComponent() {
               key={index}
               sx={{
                 backgroundColor: "#191919",
-                padding: "35px 20px",
-                margin: "20px 0px",
-                display: "flex",
-                flexWrap: "wrap",
-                position: "relative", // Позиционирование для строки
+                padding: "15px",
+                margin: "10px 0",
+                display: "grid",
+                gridTemplateColumns: "30% 35% 35%", 
+                textAlign: "left", 
                 alignItems: "center",
+                "@media (max-width: 800px)": {
+                  gridTemplateColumns: "repeat(3, 1fr)", 
+                },
+                "@media (max-width: 600px)": {
+                  gridTemplateColumns: "1fr", 
+                },
               }}
             >
-              {/* Левая колонка */}
-              <Grid
-                xs={4}
-                sx={{
-                  position: "absolute",
-                  // left: 0,
-                  textAlign: "left",
-                }}
-              >
-                <Typography>{episode.title}</Typography>
-              </Grid>
-
-              {/* Центральная колонка */}
-              <Grid
-                xs={4}
-                sx={{
-                  position: "absolute",
-                  left: "50%",
-                  // transform: "translateX(-50%)", // Центрируем колонку
-                  textAlign: "center",
-                }}
-              >
-                <Typography>{episode.airdate}</Typography>
-              </Grid>
-
-              {/* Правая колонка */}
-              <Grid
-                xs={4}
-                sx={{
-                  position: "absolute",
-                  right: 0,
-                  paddingRight: "150px",
-                  textAlign: "right",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+              <Typography>{episode.title}</Typography>
+              <Typography>{episode.airdate}</Typography>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
                 {[...Array(5)].map((_, starIndex) => (
                   <StarIcon
                     key={starIndex}
@@ -229,7 +180,7 @@ function TabsComponent() {
                   />
                 ))}
                 <Typography sx={{ marginLeft: 1 }}>{episode.rating}</Typography>
-              </Grid>
+              </Box>
             </Grid>
           ))}
         </Box>
