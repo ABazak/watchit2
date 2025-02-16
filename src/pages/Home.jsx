@@ -11,7 +11,7 @@ import SliderHome from "../components/SliderHome/SliderHome";
 
 function Home() {
   const { search, setSearch, data } = useContext(FilmsContext);
-  const { addFavorite, removeFavorite, isFavorite } = useFavorites(); 
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
   const navigate = useNavigate();
 
   const handleSearch = (event) => {
@@ -23,9 +23,9 @@ function Home() {
   };
 
   const handleHeartClick = (film) => {
-    const isLoggedIn = localStorage.getItem("accessToken"); // Проверяем авторизацию
+    const isLoggedIn = localStorage.getItem("accessToken");
     if (!isLoggedIn) {
-      navigate("/auth/login"); 
+      navigate("/auth/login");
       return;
     }
 
@@ -98,24 +98,35 @@ function Home() {
       <SliderHome genre="Action" />
       <SliderHome genre="Crime" />
 
-      <Grid container spacing={2} sx={{ padding: "15px" }}>
-        {data.map(({ id, name, runtime, premiered, image }) => (
-          <Grid size={3} key={id}>
-            <SingleCard
-              id={id}
-              name={name}
-              time={premiered}
-              runtime={runtime}
-              image={image?.original ?? DEFAULT_IMAGE}
-              makeClick={handleCardClick}
-              isFavorite={isFavorite(id)} // Состояние избранного
-              onHeartClick={() =>
-                handleHeartClick({ id, name, runtime, premiered, image })
-              } // Обработка клика на сердечко
-            />
-          </Grid>
-        ))}
-      </Grid>
+      <Box>
+        <Grid container spacing={2}>
+          {data.map(({ id, name, runtime, premiered, image }) => (
+            <Grid
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              sx={{
+                margin: " 0 auto",
+              }}
+              key={id}
+            >
+              <SingleCard
+                id={id}
+                name={name}
+                time={premiered}
+                runtime={runtime}
+                image={image?.original ?? DEFAULT_IMAGE}
+                makeClick={handleCardClick}
+                isFavorite={isFavorite(id)} // Состояние избранного
+                onHeartClick={() =>
+                  handleHeartClick({ id, name, runtime, premiered, image })
+                } // Обработка клика на сердечко
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </>
   );
 }
