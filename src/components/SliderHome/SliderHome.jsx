@@ -37,7 +37,13 @@ function SliderHome({ genre }) {
   }, [genre]);
 
   return (
-    <Box sx={{ margin: "20px 15px" }}>
+    <Box
+      sx={{
+        padding: { xs: "15px 10px", md: "0px 50px" },
+        maxWidth: "100vw",
+        overflowX: "hidden",
+      }}
+    >
       <Typography
         sx={{
           color: "#fff",
@@ -48,13 +54,26 @@ function SliderHome({ genre }) {
       >
         {genre} Shows
       </Typography>
-      <Box sx={{ maxWidth: "1600px", width: "100%", marginBottom: "70px" }}>
+      <Box
+        sx={{
+          maxWidth: "1700px",
+          width: "100%",
+          marginBottom: { md: "40px" },
+          overflow: "hidden",
+        }}
+      >
         <Swiper
           modules={[Navigation, Pagination]}
-          spaceBetween={100}
-          slidesPerView={4}
+          spaceBetween={10}
+          slidesPerView={1}
+          breakpoints={{
+            650: { slidesPerView: 2, spaceBetween: 10 },
+            768: { slidesPerView: 2, spaceBetween: 15 },
+            1024: { slidesPerView: 3, spaceBetween: 20 },
+            1920: { slidesPerView: 4, spaceBetween: 20 },
+          }}
           navigation
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "10px" }}
         >
           {movies.map((movie, index) => (
             <SwiperSlide key={index}>
