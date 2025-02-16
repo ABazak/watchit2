@@ -12,7 +12,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Card from "@mui/material/Card";
 import styles from "./SingleItemHeader.module.css";
-import { useFavorites } from "../../context/FavoriteIconContext"; 
+import { useFavorites } from "../../context/FavoriteIconContext";
 
 const SingleItemHeader = ({
   id,
@@ -22,13 +22,13 @@ const SingleItemHeader = ({
   genres = [],
 }) => {
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
-  const isSaved = isFavorite(id); 
+  const isSaved = isFavorite(id);
 
   const handleFavoriteClick = () => {
     if (isSaved) {
       removeFavorite(id);
     } else {
-      addFavorite({ id, name, image, time }); 
+      addFavorite({ id, name, image, time });
     }
   };
 
@@ -55,8 +55,13 @@ const SingleItemHeader = ({
         <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <Typography
             textTransform={"uppercase"}
-            fontSize={"2.5rem"}
-            sx={{ color: "#fff", fontWeight: "600" }}
+            sx={{
+              color: "#fff",
+              fontWeight: "600",
+              fontSize: { xs: "24px", sm: "32px", md: "40px" },
+              textAlign: "left", 
+              lineHeight: 1.2, 
+            }}
           >
             {name}
           </Typography>
