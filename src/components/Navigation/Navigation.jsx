@@ -30,7 +30,6 @@ const pages = [
   },
 ];
 
-
 export function Navigation() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -99,8 +98,13 @@ export function Navigation() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages.map(({ name }, index) => (
-                <MenuItem key={index} onClick={handleCloseNavMenu}>
+              {pages.map(({ name, link }, index) => (
+                <MenuItem
+                  key={index}
+                  component={Link} // Добавляем Link из react-router-dom
+                  to={`/${link}`} // Указываем путь для навигации
+                  onClick={handleCloseNavMenu}
+                >
                   <Typography sx={{ textAlign: "center" }}>{name}</Typography>
                 </MenuItem>
               ))}
