@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Box, Tabs, Tab, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid2"; 
+import { Box, Tabs, Tab, Typography, useMediaQuery } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import StarIcon from "@mui/icons-material/Star";
 
 function a11yProps(index) {
@@ -28,6 +28,7 @@ function CustomTabPanel(props) {
 
 function TabsComponent() {
   const [value, setValue] = useState(0);
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -105,42 +106,36 @@ function TabsComponent() {
       <CustomTabPanel value={value} index={0}>
         <Typography sx={{ color: "#fff" }}>
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum."
+          eiusmod tempor incididunt ut labore et dolore magna aliqua..."
         </Typography>
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
         <Box sx={{ width: "100%", color: "#fff" }}>
-          {/* Заголовки */}
-          <Grid
-            container
-            spacing={2}
-            sx={{
-              backgroundColor: "#282B2F",
-              padding: "15px",
-              margin: "20px 0",
-              display: "grid",
-              gridTemplateColumns: "30% 35% 35%", 
-              textAlign: "left", 
-              fontWeight: "bold",
-              fontSize: "16px",
-              "@media (max-width: 800px)": {
-                gridTemplateColumns: "repeat(3, 1fr)", 
-              },
-              "@media (max-width: 600px)": {
-                gridTemplateColumns: "1fr", 
-              },
-            }}
-          >
-            <Typography>Episode</Typography>
-            <Typography>Airdate</Typography>
-            <Typography>Rating</Typography>
-          </Grid>
+          {/* Заголовки (скрываются при мобильном разрешении) */}
+          {!isMobile && (
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                backgroundColor: "#282B2F",
+                padding: "15px",
+                margin: "20px 0",
+                display: "grid",
+                gridTemplateColumns: "30% 35% 35%",
+                textAlign: "left",
+                fontWeight: "bold",
+                fontSize: "16px",
+                "@media (max-width: 800px)": {
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                },
+              }}
+            >
+              <Typography>Episode</Typography>
+              <Typography>Airdate</Typography>
+              <Typography>Rating</Typography>
+            </Grid>
+          )}
 
           {/* Список серий */}
           {episodes.map((episode, index) => (
@@ -153,15 +148,9 @@ function TabsComponent() {
                 padding: "15px",
                 margin: "10px 0",
                 display: "grid",
-                gridTemplateColumns: "30% 35% 35%", 
-                textAlign: "left", 
+                gridTemplateColumns: isMobile ? "1fr" : "30% 35% 35%",
+                textAlign: "left",
                 alignItems: "center",
-                "@media (max-width: 800px)": {
-                  gridTemplateColumns: "repeat(3, 1fr)", 
-                },
-                "@media (max-width: 600px)": {
-                  gridTemplateColumns: "1fr", 
-                },
               }}
             >
               <Typography>{episode.title}</Typography>
